@@ -1,13 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
   margin: 0;
 }
 
 body{
-  min-height: 100vh;
+  overscroll-behavior: none;
 }

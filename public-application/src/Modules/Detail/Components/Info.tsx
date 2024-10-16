@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface InfoProps {
-    title: String;
-    value: String;
+    title: string;
+    value: string;
 }
 
 const Info: React.FC<InfoProps> = ({title, value}) => {

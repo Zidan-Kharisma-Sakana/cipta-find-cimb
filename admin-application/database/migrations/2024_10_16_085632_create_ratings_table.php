@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('branch_id')->constrained('branchs');
             $table->integer('rating');
-            $table->string('review');
+            $table->string('review')->nullable();
             $table->timestamps();
         });
     }

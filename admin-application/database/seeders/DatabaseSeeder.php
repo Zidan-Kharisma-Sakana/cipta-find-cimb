@@ -27,5 +27,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'is_superadmin' => true,
         ]);
+
+        $this->call(BranchSeeder::class);
+        
     }
 }

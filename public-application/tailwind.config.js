@@ -5,7 +5,9 @@ export default {
     extend: {
       colors:{
         cimbPrimary: "#790009",
-        cimbSecondary: "#ee1c24",
+        cimbSecondary100: "#ee1c24",
+        cimbSecondary200: "#e1161b",
+        cimbSecondary300: "#ca1214",
       }
     },
   },

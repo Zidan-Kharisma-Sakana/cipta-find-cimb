@@ -6,5 +6,8 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  border: none;
+}
+
+body{
+  min-height: 100vh;
 }

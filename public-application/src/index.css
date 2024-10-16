@@ -6,6 +6,44 @@
   margin: 0;
 }
 
-body{
+body {
   overscroll-behavior: none;
+}
+#this {
+  width: 500px; /* Initial width */
+  height: 100%;
+  background-color: white;
+  animation: shrinkWidth 2s linear 0.5s forwards; /* 1s duration, 3s delay, forwards to keep final state */
+}
+#that {
+  right: 100%;
+  animation: moveRight 1.5s linear 0.5s forwards;
+}
+#bod {
+  clip-path: ellipse(0px 0px at 0% 0%);
+  animation: circle 3s linear 2s forwards;
+}
+@keyframes circle {
+  0% {
+    clip-path: ellipse(0px 0px at 20% 20%);
+  }
+  100% {
+    clip-path: ellipse(200% 200% at 20% 20%);
+  }
+}
+@keyframes moveRight {
+  from {
+    right: 100%;
+  }
+  to {
+    right: 0%;
+  }
+}
+@keyframes shrinkWidth {
+  0% {
+    width: 500px;
+  }
+  100% {
+    width: 0px;
+  }
 }

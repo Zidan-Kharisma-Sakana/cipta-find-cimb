@@ -5,7 +5,7 @@ import CIMB from "../../../../assets/cimb_2.png";
 import RedCircle from "../../../../assets/red_circle.png";
 import L from "leaflet";
 
-export const MarkerUser = ({ flyTo }) => {
+export const MarkerUser: React.FC<{ flyTo: boolean }> = ({ flyTo }) => {
   const { latitude, longitude, loading, error } = useGeolocation();
   const map = useMap();
 

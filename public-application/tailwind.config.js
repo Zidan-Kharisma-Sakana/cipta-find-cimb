@@ -2,7 +2,12 @@
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        cimbPrimary: "#790009",
+        cimbSecondary: "#ee1c24",
+      }
+    },
   },
   plugins: [],
 };

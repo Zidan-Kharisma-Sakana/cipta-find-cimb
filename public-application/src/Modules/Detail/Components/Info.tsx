@@ -9,8 +9,8 @@ const Info: React.FC<InfoProps> = ({title, value}) => {
     return (
         <>
             <div>
-                <p className='text-sm text-gray-500'>{title}</p>
-                <h3 className='font-medium'>{value}</h3>
+                <p className='text-xs text-gray-500'>{title}</p>
+                <h3 className='text-sm font-medium'>{value}</h3>
             </div>
         </>
     )

@@ -1,20 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import InfoBox from "./InfoBox";
-import ReviewBox from "./ReviewBox";
+import Info from "./Info";
 
 export default function SideBarDetail({ data }) {
   const navigate = useNavigate()
-  const tabs = ["Info", "Review"]
-
-  const [activeTab, setActiveTab] = useState(0)
-  const contents = [
-    <InfoBox/>,
-    <ReviewBox/>
-  ]
   return (
-    <div className="w-full md:w-1/2 xl:w-1/3 border-r border-gray-400 p-8 h-screen overflow-y-auto">
+    <div className="w-full md:w-1/2 xl:w-1/3 border-r border-gray-400 p-8">
       <div onClick={()=> navigate("/")} className="cursor-pointer flex items-center w-max gap-x-2 mb-8">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,21 +40,14 @@ export default function SideBarDetail({ data }) {
           <p className="">Contact Us</p>
         </div>
       </div>
-      
       <p className="text-sm text-gray-500">Jumlah Antrian: 4</p>
-      <div className="flex my-6 border-2 border-cimbPrimary rounded-full">
-        {tabs.map((tab, index) => (
-          <button
-            key={index}
-            className={`flex-1 py-2 rounded-full font-medium text- ${activeTab === index ? "bg-cimbSecondary300 text-white" : ""}`}
-            onClick={() => setActiveTab(index)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-      <div className="tab-content">
-        {contents[activeTab]}
+      <div className="grid grid-cols-2 mt-6 gap-y-6">
+        <Info title="Provinsi" value="Jawa Timur" />
+        <Info title="Kota/Kabupatan" value="Surabaya" />
+        <div className="col-span-2">
+          <Info title="Alamat" value="Jalan Kemenangan no 31, Kel. Huhuhaha Kec. heheh" />
+        </div>
+        <Info title="Jam Operasional" value="08.00-17.00" />
       </div>
     </div>
   );

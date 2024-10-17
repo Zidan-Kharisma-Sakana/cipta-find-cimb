@@ -6,7 +6,7 @@ const ReviewBox = () => {
         <>
             <div className="space-y-8">
                 <ReviewForm/>
-                <div className="border-b">
+                <div className="border-b pb-32">
                     <Review/>
                     <Review/>
                 </div>

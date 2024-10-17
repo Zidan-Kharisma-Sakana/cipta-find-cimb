@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/branchs', BranchController::class);
+Route::apiResource('/branches', BranchController::class);
 
 Route::get('/test', function () {
     return response()->json(['message' => 'Hello World!'], 200);
@@ -29,5 +29,9 @@ Route::get('/test', function () {
 
 Route::get('/get-user', [UserController::class, 'getAllUser']);
 
-// show all branch location
-Route::get('/branchs', [BranchController::class, 'showAll']);
+// show all atm location
+Route::get('/atm/showAll', [BranchController::class, 'showAllATM']);
+
+// get filtered branch
+Route::get('/office/filter', [BranchController::class, 'getFilteredBranch']);
+Route::get('/atm/filter', [BranchController::class, 'getFilteredATM']);

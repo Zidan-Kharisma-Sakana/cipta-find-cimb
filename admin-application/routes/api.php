@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/branches', BranchController::class);
+Route::get('/nearby', [BranchController::class, 'showNearby']);
 
 Route::get('/test', function () {
     return response()->json(['message' => 'Hello World!'], 200);
@@ -42,3 +43,7 @@ Route::get('/office/{id}/review', [RatingController::class, 'showAllRatingByBran
 
 // post review
 Route::post('/office/{id}/review', [RatingController::class, 'storeRating']);
+
+// increase and decrease branch queue
+Route::post('/branches/{id}/increment-queue', [BranchController::class, 'incrementQueue']);
+Route::post('/branches/{id}/decrement-queue', [BranchController::class, 'decrementQueue']);

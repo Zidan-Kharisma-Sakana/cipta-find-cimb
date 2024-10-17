@@ -22,7 +22,7 @@ class BranchController extends Controller
             if ($branch->isEmpty()) return (new BranchResource(false, 'Data Not Found', null))->response()->setStatusCode(404);
             return new BranchResource(true, 'OK', $branch);
         } catch (Exception $exception) {
-            return (new BranchResource(false, "Internal Server Error", null))->response()->setStatusCode(500);
+            return (new BranchResource(false, "Internal Serverrr Error", null))->response()->setStatusCode(500);
         }
     }
 
@@ -96,7 +96,103 @@ class BranchController extends Controller
                 ->response()
                 ->setStatusCode(200);
         } catch (Exception $exception) {
-            return (new BranchResource(false, "Internal Server Error", null))->response()->setStatusCode(500);
+            return (new BranchResource(false, "Internal Serverrr Error", null))->response()->setStatusCode(500);
         }
     }
+//show 5 nearby branches location
+    public function showNearby(Request $request)
+    {
+    $request->validate([
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+        'distance' => 'nullable|numeric',
+    ]);
+
+    $latitude = $request->input('latitude');
+    $longitude = $request->input('longitude');
+    $distance = $request->input('distance', 50); 
+    $limit = 5;
+
+    try {
+        $nearbyBranches = Branch::select(
+            '*',
+            DB::raw("ABS(latitude - $latitude) + ABS(longitude - $longitude) AS distance")
+        )
+        ->orderBy('distance')
+        ->limit($limit)
+        ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Nearby branches found',
+            'data' => $nearbyBranches,
+        ], 200);
+    } catch (\Exception $e) {
+        Log::error('Error fetching nearby branches: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Internal Serverrrrr Error',
+            'data' => null,
+        ], 500);
+    }
+    }
+
+public function incrementQueue($id)
+    {
+        try {
+            $branch = Branch::findOrFail($id);
+
+            $branch->queue += 1;
+
+            $branch->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Queue incremented successfully',
+                'data' => $branch,
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Error incrementing queue: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal Server Error',
+                'data' => null,
+            ], 500);
+        }
+    }
+
+    public function decrementQueue($id)
+{
+    try {
+        $branch = Branch::findOrFail($id);
+
+        if ($branch->queue > 0) {
+            $branch->queue -= 1;
+            $branch->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Queue decremented successfully',
+                'data' => $branch,
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Queue cannot be less than zero',
+                'data' => $branch,
+            ], 400);
+        }
+    } catch (\Exception $e) {
+        Log::error('Error decrementing queue: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Internal Server Error',
+            'data' => null,
+        ], 500);
+    }
+}
+
 }

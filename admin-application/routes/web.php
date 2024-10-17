@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BranchController as AdminBranchController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,16 +23,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('dashboard/index');
-    })->name('dashboard.index')->middleware('is_superadmin');
+    })->name('dashboard.index');
 
-    Route::get('/branch', function () {
-        return view('branch/index');
-    })->name('branch.index');
+    Route::resource('/branch', AdminBranchController::class);
+    Route::get('/branch-data', [AdminBranchController::class, 'branchData'])->name('branch.data');
 
-});
+// });
 
 // Login & Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

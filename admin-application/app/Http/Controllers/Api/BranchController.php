@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class BranchController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // return new BranchResource(true, 'OK', Branch::where('is_deleted', false)->get());
         try {
@@ -42,42 +42,24 @@ class BranchController extends Controller
     public function getFilteredBranch(Request $request)
     {
         try {
-            // Base query untuk branch yang tidak dihapus dan memiliki tipe tertentu
             $branchs = Branch::where('is_deleted', false)
                 ->whereIn('type', ['kc', 'kcs', 'kcp_sb', 'kcp_dl', 'kcps']);
 
-            // Ubah input user menjadi lowercase untuk pengecekan case-insensitive
-            if ($request->has('name')) {
-                $name = strtolower($request->name);
-                $branchs->whereRaw('LOWER(name) LIKE ?', ["%{$name}%"]);
-            }
-            if ($request->has('city')) {
-                $city = strtolower($request->city);
-                $branchs->whereRaw('LOWER(city) LIKE ?', ["%{$city}%"]);
-            }
-            if ($request->has('province')) {
-                $province = strtolower($request->province);
-                $branchs->whereRaw('LOWER(province) LIKE ?', ["%{$province}%"]);
-            }
-            if ($request->has('type')) {
-                $type = strtolower($request->type);
-                $branchs->whereRaw('LOWER(type) = ?', [$type]);
-            }
+            if ($request->has('name')) $branchs->where('name', 'LIKE', "%{$request->name}%");
+            if ($request->has('city')) $branchs->where('city', 'LIKE', "%{$request->city}%");
+            if ($request->has('province')) $branchs->where('province', 'LIKE', "%{$request->province}%");
+            if ($request->has('type')) $branchs->where('type', $request->type);
 
-            // Eksekusi query untuk mendapatkan hasilnya
             $result = $branchs->get();
 
-            // Jika hasil kosong, kembalikan respons 404
             if ($result->isEmpty()) {
                 return (new BranchResource(false, 'Not Found', null))->response()->setStatusCode(404);
             }
 
-            // Kembalikan hasil dengan status 200
             return (new BranchResource(true, 'OK', $result))
                 ->response()
                 ->setStatusCode(200);
         } catch (Exception $exception) {
-            // Tangani error dan kembalikan respons 500 jika terjadi exception
             return (new BranchResource(false, "Internal Server Error", null))->response()->setStatusCode(500);
         }
     }
@@ -101,15 +83,8 @@ class BranchController extends Controller
             $branchs = Branch::where('is_deleted', false)
                 ->whereIn('type', ['atm', 'cdm', 'tst']);
 
-            // Ubah input user menjadi lowercase untuk pengecekan case-insensitive
-            if ($request->has('city')) {
-                $city = strtolower($request->city);
-                $branchs->whereRaw('LOWER(city) LIKE ?', ["%{$city}%"]);
-            }
-            if ($request->has('province')) {
-                $province = strtolower($request->province);
-                $branchs->whereRaw('LOWER(province) LIKE ?', ["%{$province}%"]);
-            }
+            if ($request->has('city')) $branchs->where('city', 'LIKE', "%{$request->city}%");
+            if ($request->has('province')) $branchs->where('province', 'LIKE', "%{$request->province}%");
 
             $result = $branchs->get();
 
@@ -124,44 +99,85 @@ class BranchController extends Controller
             return (new BranchResource(false, "Internal Serverrr Error", null))->response()->setStatusCode(500);
         }
     }
-    //show 5 nearby branches location
-    public function showNearby(Request $request)
+
+    public function showNearbyBranch(Request $request)
     {
-        $request->validate([
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'distance' => 'nullable|numeric',
-        ]);
+    $request->validate([
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+        'distance' => 'nullable|numeric',
+    ]);
 
-        $latitude = $request->input('latitude');
-        $longitude = $request->input('longitude');
-        $distance = $request->input('distance', 50);
-        $limit = 5;
+    $latitude = $request->input('latitude');
+    $longitude = $request->input('longitude');
+    $distance = $request->input('distance', 50);
+    $limit = 5;
 
-        try {
-            $nearbyBranches = Branch::select(
-                '*',
-                DB::raw("ABS(latitude - $latitude) + ABS(longitude - $longitude) AS distance")
-            )
-                ->orderBy('distance')
-                ->limit($limit)
-                ->get();
+    try {
+        $nearbyBranches = Branch::select(
+            '*',
+            DB::raw("ABS(latitude - $latitude) + ABS(longitude - $longitude) AS distance")
+        )
+        ->whereIn('type', ['kc', 'kcs', 'kcp_sb', 'kcp_dl', 'kcps'])
+        ->orderBy('distance')
+        ->limit($limit)
+        ->get();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Nearby branches found',
-                'data' => $nearbyBranches,
-            ], 200);
-        } catch (\Exception $e) {
-            Log::error('Error fetching nearby branches: ' . $e->getMessage());
+        return response()->json([
+            'success' => true,
+            'message' => 'Nearby branches found',
+            'data' => $nearbyBranches,
+        ], 200);
+    } catch (\Exception $e) {
+        Log::error('Error fetching nearby branches: ' . $e->getMessage());
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Internal Serverrrrr Error',
-                'data' => null,
-            ], 500);
-        }
+        return response()->json([
+            'success' => false,
+            'message' => 'Internal Server Error',
+            'data' => null,
+        ], 500);
     }
+    }
+
+    public function showNearbyAtm(Request $request)
+    {
+    $request->validate([
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+        'distance' => 'nullable|numeric',
+    ]);
+
+    $latitude = $request->input('latitude');
+    $longitude = $request->input('longitude');
+    $distance = $request->input('distance', 50);
+    $limit = 5;
+
+    try {
+        $nearbyBranches = Branch::select(
+            '*',
+            DB::raw("ABS(latitude - $latitude) + ABS(longitude - $longitude) AS distance")
+        )
+        ->whereIn('type', ['atm', 'cdm', 'tst'])
+        ->orderBy('distance')
+        ->limit($limit)
+        ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Nearby branches found',
+            'data' => $nearbyBranches,
+        ], 200);
+    } catch (\Exception $e) {
+        Log::error('Error fetching nearby branches: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Internal Server Error',
+            'data' => null,
+        ], 500);
+    }
+    }
+
 
     public function incrementQueue($id)
     {
@@ -189,34 +205,35 @@ class BranchController extends Controller
     }
 
     public function decrementQueue($id)
-    {
-        try {
-            $branch = Branch::findOrFail($id);
+{
+    try {
+        $branch = Branch::findOrFail($id);
 
-            if ($branch->queue > 0) {
-                $branch->queue -= 1;
-                $branch->save();
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Queue decremented successfully',
-                    'data' => $branch,
-                ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Queue cannot be less than zero',
-                    'data' => $branch,
-                ], 400);
-            }
-        } catch (\Exception $e) {
-            Log::error('Error decrementing queue: ' . $e->getMessage());
+        if ($branch->queue > 0) {
+            $branch->queue -= 1;
+            $branch->save();
 
             return response()->json([
+                'success' => true,
+                'message' => 'Queue decremented successfully',
+                'data' => $branch,
+            ], 200);
+        } else {
+            return response()->json([
                 'success' => false,
-                'message' => 'Internal Server Error',
-                'data' => null,
-            ], 500);
+                'message' => 'Queue cannot be less than zero',
+                'data' => $branch,
+            ], 400);
         }
+    } catch (\Exception $e) {
+        Log::error('Error decrementing queue: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Internal Server Error',
+            'data' => null,
+        ], 500);
     }
+}
+
 }

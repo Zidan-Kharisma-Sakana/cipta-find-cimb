@@ -1,3 +1,4 @@
+import { FilterProvider } from "../../../Utils/useFilter";
 import { useIsMobile } from "../../../Utils/useIsMobile";
 import { useSidebar } from "../../../Utils/useSideBar";
 import HomeLayout from "../../Layout/HomeLayout";
@@ -23,7 +24,9 @@ function Home() {
 export default function HomePage() {
   return (
     <HomeLayout home>
-      <Home />
+      <FilterProvider>
+        <Home />
+      </FilterProvider>
     </HomeLayout>
   );
 }

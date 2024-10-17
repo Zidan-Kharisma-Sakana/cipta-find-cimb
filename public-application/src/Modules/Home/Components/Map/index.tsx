@@ -7,7 +7,7 @@ import MapHome from "./MapHome";
 
 const MapHomeContainer: React.FC = () => {
   return (
-    <div className="w-0 md:w-1/2 xl:w-2/3">
+    <div className="fixed right-0 top-16 w-0 md:w-1/2 xl:w-2/3">
       <MapContainer center={[-6.1754, 106.8272]} className="h-[calc(100vh-64px)]" zoom={10} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

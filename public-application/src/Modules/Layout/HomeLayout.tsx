@@ -17,7 +17,7 @@ const HomeLayout: React.FC<{ children: React.ReactNode; home?: boolean }> = ({ c
         )}
         <CIMB />
       </div>
-      <section className="w-full h-screen overflow-y-hidden">
+      <section className="w-full h-screen">
         <div className="mt-16">{children}</div>
       </section>
     </main>

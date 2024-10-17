@@ -31,11 +31,11 @@
         <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon">
-                    <img class="img-fluid" src="{{ asset('cimb.png') }}" alt="">
+                    <img src="{{ asset('cimb.png') }}" alt="CIMB Niaga" style="height: 64px; width: auto;">
                 </div>
-                <div class="sidebar-brand-text mx-3">CIMB Niaga</div>
+                <div class="sidebar-brand-text mx-2">CIMB Niaga</div>
             </a>
 
             <!-- Divider -->

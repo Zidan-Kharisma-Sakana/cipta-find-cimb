@@ -7,6 +7,8 @@ use App\Http\Resources\BranchResource;
 use App\Models\Branch;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BranchController extends Controller
 {

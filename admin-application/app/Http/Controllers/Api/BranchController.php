@@ -26,4 +26,12 @@ class BranchController extends Controller
             return (new BranchResource(false, "Internal Server Error", null))->response()->setStatusCode(500);
         }
     }
+
+    // show all branch location
+    public function showAll()
+    {
+        $branchs = Branch::all();
+
+        return response()->json($branchs);
+    }
 }

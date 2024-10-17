@@ -27,7 +27,9 @@ class RatingController extends Controller
 
     public function showAllRatingByBranch(string $id)
     {
-        $user = Rating::where('branch_id', $id)->get();
+        $user = Rating::where('branch_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         if ($user->isEmpty()) {
             return response()->json([
@@ -54,7 +56,7 @@ class RatingController extends Controller
 
             // Simpan data rating ke database
             $rating = new Rating();
-            $rating->branch_id = $id;   
+            $rating->branch_id = $id;
             $rating->rating = $request->rating;
             $rating->review = $request->input('review', null); // set review sebagai null jika tidak ada input
             $rating->save();

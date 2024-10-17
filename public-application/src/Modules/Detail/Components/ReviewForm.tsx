@@ -2,7 +2,12 @@ const ReviewForm = () => {
     return (
         <form action="">
             <label className="pb-2">Review</label>
-            <textarea className="w-full border border-black rounded focus:border-2 focus:outline-none focus:border-cimbSecondary100 p-2 text-sm"></textarea>
+            <textarea 
+                className="w-full border border-black rounded focus:border-2 focus:outline-none focus:border-cimbSecondary100 p-2 text-sm"
+                placeholder="Tempatnya mantap"
+            >
+
+            </textarea>
             <div className="flex pt-2">
                 <div>
                 ⭐

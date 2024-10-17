@@ -4,7 +4,7 @@ import { useState } from "react";
 import InfoBox from "./InfoBox";
 import ReviewBox from "./ReviewBox";
 
-export default function SideBarDetail({ data }) {
+export default function SideBarDetail() {
   const navigate = useNavigate()
   const tabs = ["Info", "Review"]
 

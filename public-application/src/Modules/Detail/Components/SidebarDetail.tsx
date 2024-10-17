@@ -6,6 +6,7 @@ import InfoBox from "./InfoBox";
 import ReviewBox from "./ReviewBox";
 import { DataContext } from "../Pages/DetailPage";
 import { CATEGORY_DICTIONARY } from "../../Home/Components/constant";
+import CIMB from "../../../assets/cimb_2.png";
 
 export default function SideBarDetail() {
   const navigate = useNavigate();
@@ -46,6 +47,13 @@ export default function SideBarDetail() {
 
       <p className="text-sm text-gray-500">Jumlah Antrian: {data.queue}</p>
       <p>⭐{data.rate}/5</p>
+      <img
+        className="w-2/3 mx-auto rounded mt-6"
+        src={`http://localhost:8000/storage/${data.image_path}`}
+        onError={(e) => {
+          e.currentTarget.src = CIMB;
+        }}
+      />
       <div className="flex my-6 border-2 border-cimbPrimary rounded-full">
         {tabs.map((tab, index) => (
           <button

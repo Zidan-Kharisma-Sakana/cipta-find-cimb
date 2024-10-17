@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Info from './Info';
 import { DataContext } from '../Pages/DetailPage';
 import { useContext } from 'react';
 
 const InfoBox = () => {
-  const data = useContext(DataContext)
+  const data = useContext(DataContext) as any
 
     return (
         <>

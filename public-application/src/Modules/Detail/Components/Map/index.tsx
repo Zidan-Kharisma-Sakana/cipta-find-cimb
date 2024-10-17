@@ -9,9 +9,9 @@ const MapDetailContainer: React.FC = () => {
     position: [-6.1754, 106.8272]
   }
   return (
-    <div className="w-full md:w-1/2 xl:w-2/3">
-      <MapContainer center={[-6.1754, 106.8272]} className="h-[45vh] md:h-[calc(100vh-64px)] z-10 fixed" zoom={15} scrollWheelZoom={false}>
-        <TileLayer
+    <div className="fixed right-0 top-16 w-0 md:w-1/2 xl:w-2/3">
+      <MapContainer center={[-6.1754, 106.8272]} className="h-[calc(100vh-64px)]" zoom={15} scrollWheelZoom={false}>
+      <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />

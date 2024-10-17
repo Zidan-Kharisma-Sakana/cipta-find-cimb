@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/branches', BranchController::class);
+Route::get('/nearby', [BranchController::class, 'showNearby']);
 
 Route::get('/test', function () {
     return response()->json(['message' => 'Hello World!'], 200);

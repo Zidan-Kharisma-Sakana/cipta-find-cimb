@@ -23,9 +23,14 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard'); // Halaman untuk admin/superadmin
-    })->name('admin.dashboard')->middleware('is_superadmin');
+    Route::get('/', function () {
+        return view('dashboard/index');
+    })->name('dashboard.index')->middleware('is_superadmin');
+
+    Route::get('/branch', function () {
+        return view('branch/index');
+    })->name('branch.index');
+
 });
 
 // Login & Logout

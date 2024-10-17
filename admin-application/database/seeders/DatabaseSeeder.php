@@ -29,6 +29,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(BranchSeeder::class);
-        
+        $this->call(RatingSeeder::class);
     }
 }

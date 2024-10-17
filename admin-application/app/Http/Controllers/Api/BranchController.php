@@ -7,6 +7,8 @@ use App\Http\Resources\BranchResource;
 use App\Models\Branch;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BranchController extends Controller
 {
@@ -20,7 +22,7 @@ class BranchController extends Controller
             if ($branch->isEmpty()) return (new BranchResource(false, 'Data Not Found', null))->response()->setStatusCode(404);
             return new BranchResource(true, 'OK', $branch);
         } catch (Exception $exception) {
-            return (new BranchResource(false, "Internal Server Error", null))->response()->setStatusCode(500);
+            return (new BranchResource(false, "Internal Serverrr Error", null))->response()->setStatusCode(500);
         }
     }
 
@@ -94,7 +96,48 @@ class BranchController extends Controller
                 ->response()
                 ->setStatusCode(200);
         } catch (Exception $exception) {
-            return (new BranchResource(false, "Internal Server Error", null))->response()->setStatusCode(500);
+            return (new BranchResource(false, "Internal Serverrr Error", null))->response()->setStatusCode(500);
         }
     }
+
+    public function showNearby(Request $request)
+{
+    $request->validate([
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+        'distance' => 'nullable|numeric', // Default distance threshold, if needed
+    ]);
+
+    $latitude = $request->input('latitude');
+    $longitude = $request->input('longitude');
+    $distance = $request->input('distance', 50); // Default distance threshold (optional)
+    $limit = 5;
+
+    try {
+        $nearbyBranches = Branch::select(
+            '*',
+            DB::raw("ABS(latitude - $latitude) + ABS(longitude - $longitude) AS distance")
+        )
+        ->orderBy('distance')
+        ->limit($limit)
+        ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Nearby branches found',
+            'data' => $nearbyBranches,
+        ], 200);
+    } catch (\Exception $e) {
+        Log::error('Error fetching nearby branches: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Internal Serverrrrr Error',
+            'data' => null,
+        ], 500);
+    }
+}
+
+
+
 }

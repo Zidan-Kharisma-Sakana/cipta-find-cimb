@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use Exception;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -30,8 +31,29 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        dd('store');
+        $validateBranch = $request->validate([
+            "name"=>'required',
+            "type"=>'required',
+            "address"=>'required',
+            "city"=>'required',
+            "province"=>'required',
+            "cp"=>'required',
+            "latitude"=>'required',
+            "longitude"=>'required',
+            "open_hour"=>'required',
+            "close_hour"=>'required',
+            "image_path"=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+
+        if($request->file('image_path')){
+            $validateBranch['image_path'] = $request->file('image_path')->store('branch-images');
+        }
+
+        Branch::create($validateBranch);
+        return redirect('/branch')->with('storeBranchSuccess', 'Data berhasil disimpan!');
     }
+    
 
     /**
      * Display the specified resource.

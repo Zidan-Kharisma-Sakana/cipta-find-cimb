@@ -51,6 +51,7 @@ export default function SideBarDetail({ data }) {
       </div>
       
       <p className="text-sm text-gray-500">Jumlah Antrian: 4</p>
+      <p>⭐4.8/5</p>
       <div className="flex my-6 border-2 border-cimbPrimary rounded-full">
         {tabs.map((tab, index) => (
           <button

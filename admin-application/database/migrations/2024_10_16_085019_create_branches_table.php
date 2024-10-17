@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('city');
             $table->string('province');
             $table->string('cp');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->float('latitude');
+            $table->float('longitude');
             $table->string('open_hour');
             $table->string('close_hour');
             $table->integer('queue')->default(0);
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('branchs');
+        Schema::dropIfExists('branches');
     }
 };

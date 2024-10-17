@@ -8,7 +8,7 @@ const SideBarHome: React.FC = () => {
     <aside className="bg-white border p-8 border-r w-full md:w-1/2 xl:w-1/3">
       <div>
         <div className="relative overflow-hidden">
-          <h4 className="text-cimbPrimary font-bold text-2xl">Niaga Nearby</h4>
+          <h4 className="text-cimbPrimary font-bold text-2xl">Nearby Niaga</h4>
           <p className="text-cimbSecondary300 font-medium">Cara Praktis cari Kantor & ATM CIMB Niaga</p>
           <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-[100px] bg-white flex">
             <div id="this" />
@@ -18,7 +18,7 @@ const SideBarHome: React.FC = () => {
           </div>
         </div>
       </div>
-      <div id="bod" className="w-full my-8">
+      <div id="bod" className="w-full mb-8 mt-16">
         <TypeQueryInput />
         <div className="mt-8 grid grid-cols-1 gap-y-2">
           {type === "office" && <SearchQueryInput />}

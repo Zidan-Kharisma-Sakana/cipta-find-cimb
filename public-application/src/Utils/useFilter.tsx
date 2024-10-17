@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useState, ReactNode, useCallback, useEffect } from "react";
 import { Branch } from "./type";
+import toast from "react-hot-toast";
 
 interface FilterContextProps {
   type: string;
@@ -10,6 +11,7 @@ interface FilterContextProps {
   category: string;
   data: Branch[];
   setFilter: (filter: string, value: any) => void;
+  findNearby: (lat: number, lon: number) => Promise<void>;
 }
 
 const FilterContext = createContext<FilterContextProps | undefined>(undefined);
@@ -55,6 +57,7 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   useEffect(() => {
     async function getData() {
+      toast.loading("Finding Locations...")
       const response = await fetch(
         `http://localhost:8000/api/${type}/filter?${new URLSearchParams({
           ...(searchTerm ? { name: searchTerm } : {}),
@@ -63,19 +66,43 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
           ...(category ? { type: category } : {}),
         })}`
       );
+      toast.dismiss()
       const result = await response.json();
       if (response.status === 200) {
         setData(result.data);
       } else {
+        toast.error("Something went wrong")
         console.error(result);
-        setData([])
+        setData([]);
       }
     }
     getData();
   }, [searchTerm, type, province, city, category]);
 
+  const findNearby = useCallback(
+    async (lat: number, long: number) => {
+      toast.loading("Finding Locations...")
+      const response = await fetch(
+        `http://localhost:8000/api/nearby${type === "office" ? "Branch" : "Atm"}?${new URLSearchParams({
+          latitude: String(lat),
+          longitude: String(long),
+        })}`
+      );
+      toast.dismiss()
+      const result = await response.json();
+      if (response.status === 200) {
+        setData(result.data);
+      } else {
+        toast.error("Something went wrong")
+        console.error(result);
+        setData([]);
+      }
+    },
+    [type, setData]
+  );
+
   return (
-    <FilterContext.Provider value={{ data, type, searchTerm, province, city, category, setFilter }}>
+    <FilterContext.Provider value={{ data, type, searchTerm, province, city, category, setFilter, findNearby }}>
       {children}
     </FilterContext.Provider>
   );

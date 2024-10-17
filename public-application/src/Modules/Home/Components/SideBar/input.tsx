@@ -3,6 +3,8 @@ import { CATEGORY_OPTIONS, CITY_OPTIONS } from "../constant";
 import { useFilter } from "../../../../Utils/useFilter";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../../../../Utils/useDebounce";
+import { useGeolocation } from "../../../../Utils/useGeolocation";
+import toast from "react-hot-toast";
 
 export const TypeQueryInput = () => {
   const { type, setFilter } = useFilter();
@@ -14,7 +16,9 @@ export const TypeQueryInput = () => {
             setFilter("type", "office");
           }
         }}
-        className={`relative py-2 transition-colors duration-500 z-20 ${type === "office" ? "text-white" : "text-cimbPrimary "}`}
+        className={`relative py-2 transition-colors duration-500 z-20 ${
+          type === "office" ? "text-white" : "text-cimbPrimary "
+        }`}
       >
         Kantor CIMB
       </p>
@@ -24,7 +28,9 @@ export const TypeQueryInput = () => {
             setFilter("type", "atm");
           }
         }}
-        className={`relative py-2 transition-colors duration-500 z-20 ${type === "atm" ? "text-white" : "text-cimbPrimary "}`}
+        className={`relative py-2 transition-colors duration-500 z-20 ${
+          type === "atm" ? "text-white" : "text-cimbPrimary "
+        }`}
       >
         ATM CIMB
       </p>
@@ -71,8 +77,27 @@ export const LocationQueryInput = () => {
 };
 
 export const NearestLocationInput = () => {
+  const { longitude, latitude, loading, error } = useGeolocation();
+  const { type, findNearby } = useFilter();
+  const notPermitted = loading || error || !longitude || !latitude;
   return (
-    <div className="rounded-lg border border-400 p-6 text-cimbPrimary flex items-center justify-center gap-4 border-cimbPrimary cursor-pointer hover:ring-1 hover:ring-cimbSecondary100 hover:bg-cimbSecondary100 hover:text-white hover:border-cimbSecondary100 transform duration-300">
+    <div
+      onClick={async () => {
+        if (notPermitted) {
+          toast.error("Please Allow Location Access");
+        } else {
+          await findNearby(latitude, longitude);
+        }
+      }}
+      className={`rounded-lg border border-400 p-6 text-cimbPrimary flex 
+        items-center justify-center gap-4 border-cimbPrimary transform duration-300
+        ${
+          notPermitted
+            ? " cursor-not-allowed"
+            : " cursor-pointer hover:ring-1 hover:ring-cimbSecondary100 hover:bg-cimbSecondary100 hover:text-white hover:border-cimbSecondary100"
+        }
+        `}
+    >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-6">
         <path
           fillRule="evenodd"
@@ -81,7 +106,7 @@ export const NearestLocationInput = () => {
         />
       </svg>
 
-      <p>Cari yang Terdekat</p>
+      <p>{`Cari ${type === "office" ? "Branch" : "ATM"} Terdekat`}</p>
     </div>
   );
 };

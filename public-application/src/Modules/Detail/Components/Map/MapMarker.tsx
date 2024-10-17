@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Marker, Popup, useMap } from "react-leaflet";
 import { useGeolocation } from "../../../../Utils/useGeolocation";
 import { useEffect, useContext } from "react";
@@ -5,6 +6,7 @@ import CIMB from "../../../../assets/cimb_2.png";
 import RedCircle from "../../../../assets/red_circle.png";
 import L from "leaflet";
 import { DataContext } from "../../Pages/DetailPage";
+import { CATEGORY_DICTIONARY } from "../../../Home/Components/constant";
 
 export const MarkerUser: React.FC<{ flyTo: boolean }> = ({ flyTo }) => {
   const { latitude, longitude, loading, error } = useGeolocation();
@@ -12,7 +14,6 @@ export const MarkerUser: React.FC<{ flyTo: boolean }> = ({ flyTo }) => {
 
   useEffect(() => {
     if (!!latitude && !!longitude && flyTo) {
-      console.log("Heya");
       map.flyTo([latitude, longitude], 15);
     }
   }, [latitude, longitude, loading, error, flyTo, map]);
@@ -63,6 +64,8 @@ export const MarkerLocation: React.FC<{ position: L.LatLngExpression; size: keyo
   size,
 }) => {
   const { iconAnchor, iconSize, popupAnchor, shadowAnchor, shadowSize } = MARKER_SIZE[size];
+  const data = useContext(DataContext) as any;
+
   return (
     <Marker
       icon={L.icon({
@@ -77,19 +80,14 @@ export const MarkerLocation: React.FC<{ position: L.LatLngExpression; size: keyo
       position={position}
     >
       <Popup>
-        <PopUpData />
+        <div className="max-w-48">
+          <h6 className="text-xs font-medium">
+            {CATEGORY_DICTIONARY[data.type as keyof typeof CATEGORY_DICTIONARY]}
+          </h6>
+          <h5 className="font-bold mt-1">{data.name}</h5>
+          <h6 className="line-clamp-3 mt-2">{data.address}</h6>
+        </div>{" "}
       </Popup>
     </Marker>
-  );
-};
-const PopUpData = () => {
-  const data = useContext(DataContext)
-
-  return (
-    <div className="max-w-48">
-      <h6 className="text-sm font-medium">{data.type.toUpperCase()}</h6>
-      <h5 className="font-bold mt-1">{data.name}</h5>
-      <h6 className="line-clamp-3 mt-2">{data.address}</h6>
-    </div>
   );
 };

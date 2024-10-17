@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\BranchController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +36,13 @@ Route::get('/atm/showAll', [BranchController::class, 'showAllATM']);
 // get filtered branch
 Route::get('/office/filter', [BranchController::class, 'getFilteredBranch']);
 Route::get('/atm/filter', [BranchController::class, 'getFilteredATM']);
+
+// show all review
+Route::get('/review/showAll', [RatingController::class, 'showAllRating']);
+Route::get('/office/{id}/review', [RatingController::class, 'showAllRatingByBranch']);
+
+// post review
+Route::post('/office/{id}/review', [RatingController::class, 'storeRating']);
 
 // increase and decrease branch queue
 Route::post('/branches/{id}/increment-queue', [BranchController::class, 'incrementQueue']);

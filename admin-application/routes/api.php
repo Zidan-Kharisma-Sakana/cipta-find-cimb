@@ -36,3 +36,7 @@ Route::get('/atm/showAll', [BranchController::class, 'showAllATM']);
 // get filtered branch
 Route::get('/office/filter', [BranchController::class, 'getFilteredBranch']);
 Route::get('/atm/filter', [BranchController::class, 'getFilteredATM']);
+
+// increase and decrease branch queue
+Route::post('/branches/{id}/increment-queue', [BranchController::class, 'incrementQueue']);
+Route::post('/branches/{id}/decrement-queue', [BranchController::class, 'decrementQueue']);

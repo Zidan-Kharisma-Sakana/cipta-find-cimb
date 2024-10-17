@@ -138,6 +138,61 @@ class BranchController extends Controller
     }
 }
 
+public function incrementQueue($id)
+    {
+        try {
+            $branch = Branch::findOrFail($id);
 
+            $branch->queue += 1;
+
+            $branch->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Queue incremented successfully',
+                'data' => $branch,
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Error incrementing queue: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal Server Error',
+                'data' => null,
+            ], 500);
+        }
+    }
+
+    public function decrementQueue($id)
+{
+    try {
+        $branch = Branch::findOrFail($id);
+
+        if ($branch->queue > 0) {
+            $branch->queue -= 1;
+            $branch->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Queue decremented successfully',
+                'data' => $branch,
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Queue cannot be less than zero',
+                'data' => $branch,
+            ], 400);
+        }
+    } catch (\Exception $e) {
+        Log::error('Error decrementing queue: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Internal Server Error',
+            'data' => null,
+        ], 500);
+    }
+}
 
 }

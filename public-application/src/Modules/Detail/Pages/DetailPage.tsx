@@ -1,6 +1,6 @@
 import HomeLayout from "../../Layout/HomeLayout";
 import MapDetailContainer from "../Components/Map/index";
-import SideBarDetail from "../Components/SideBar";
+import SideBarDetail from "../Components/SidebarDetail";
 
 function Detail() {
   return (

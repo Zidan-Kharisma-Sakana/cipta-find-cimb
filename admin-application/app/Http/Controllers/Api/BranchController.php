@@ -99,18 +99,18 @@ class BranchController extends Controller
             return (new BranchResource(false, "Internal Serverrr Error", null))->response()->setStatusCode(500);
         }
     }
-
+//show 5 nearby branches location
     public function showNearby(Request $request)
-{
+    {
     $request->validate([
         'latitude' => 'required|numeric',
         'longitude' => 'required|numeric',
-        'distance' => 'nullable|numeric', // Default distance threshold, if needed
+        'distance' => 'nullable|numeric',
     ]);
 
     $latitude = $request->input('latitude');
     $longitude = $request->input('longitude');
-    $distance = $request->input('distance', 50); // Default distance threshold (optional)
+    $distance = $request->input('distance', 50); 
     $limit = 5;
 
     try {
@@ -136,7 +136,7 @@ class BranchController extends Controller
             'data' => null,
         ], 500);
     }
-}
+    }
 
 public function incrementQueue($id)
     {

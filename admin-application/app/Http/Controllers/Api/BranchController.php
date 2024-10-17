@@ -100,17 +100,17 @@ class BranchController extends Controller
         }
     }
 
-    public function showNearby(Request $request)
-{
+    public function showNearbyBranch(Request $request)
+    {
     $request->validate([
         'latitude' => 'required|numeric',
         'longitude' => 'required|numeric',
-        'distance' => 'nullable|numeric', // Default distance threshold, if needed
+        'distance' => 'nullable|numeric',
     ]);
 
     $latitude = $request->input('latitude');
     $longitude = $request->input('longitude');
-    $distance = $request->input('distance', 50); // Default distance threshold (optional)
+    $distance = $request->input('distance', 50);
     $limit = 5;
 
     try {
@@ -118,6 +118,7 @@ class BranchController extends Controller
             '*',
             DB::raw("ABS(latitude - $latitude) + ABS(longitude - $longitude) AS distance")
         )
+        ->whereIn('type', ['kc', 'kcs', 'kcp_sb', 'kcp_dl', 'kcps'])
         ->orderBy('distance')
         ->limit($limit)
         ->get();
@@ -132,11 +133,51 @@ class BranchController extends Controller
 
         return response()->json([
             'success' => false,
-            'message' => 'Internal Serverrrrr Error',
+            'message' => 'Internal Server Error',
             'data' => null,
         ], 500);
     }
-}
+    }
+
+    public function showNearbyAtm(Request $request)
+    {
+    $request->validate([
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+        'distance' => 'nullable|numeric',
+    ]);
+
+    $latitude = $request->input('latitude');
+    $longitude = $request->input('longitude');
+    $distance = $request->input('distance', 50);
+    $limit = 5;
+
+    try {
+        $nearbyBranches = Branch::select(
+            '*',
+            DB::raw("ABS(latitude - $latitude) + ABS(longitude - $longitude) AS distance")
+        )
+        ->whereIn('type', ['atm', 'cdm', 'tst'])
+        ->orderBy('distance')
+        ->limit($limit)
+        ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Nearby branches found',
+            'data' => $nearbyBranches,
+        ], 200);
+    } catch (\Exception $e) {
+        Log::error('Error fetching nearby branches: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Internal Server Error',
+            'data' => null,
+        ], 500);
+    }
+    }
+
 
     public function incrementQueue($id)
     {

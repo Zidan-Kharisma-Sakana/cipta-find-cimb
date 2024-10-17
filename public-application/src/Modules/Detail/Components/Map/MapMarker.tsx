@@ -1,9 +1,10 @@
 import { Marker, Popup, useMap } from "react-leaflet";
 import { useGeolocation } from "../../../../Utils/useGeolocation";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import CIMB from "../../../../assets/cimb_2.png";
 import RedCircle from "../../../../assets/red_circle.png";
 import L from "leaflet";
+import { DataContext } from "../../Pages/DetailPage";
 
 export const MarkerUser: React.FC<{ flyTo: boolean }> = ({ flyTo }) => {
   const { latitude, longitude, loading, error } = useGeolocation();
@@ -82,11 +83,13 @@ export const MarkerLocation: React.FC<{ position: L.LatLngExpression; size: keyo
   );
 };
 const PopUpData = () => {
+  const data = useContext(DataContext)
+
   return (
     <div className="max-w-48">
-      <h6 className="text-sm font-medium">Kantor Cabang</h6>
-      <h5 className="font-bold mt-1">Nama</h5>
-      <h6 className="line-clamp-3 mt-2">Jl kucing 123 456 789 10 11 12 13 14 blabla blabla blabla</h6>
+      <h6 className="text-sm font-medium">{data.type.toUpperCase()}</h6>
+      <h5 className="font-bold mt-1">{data.name}</h5>
+      <h6 className="line-clamp-3 mt-2">{data.address}</h6>
     </div>
   );
 };

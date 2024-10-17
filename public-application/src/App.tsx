@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ErrorLayout from "./Modules/Layout/ErrorLayout";
 import HomePage from "./Modules/Home/Pages/HomePage";
-import DetailPage from "./Modules/Detail/Pages/DetailPage";
+import {DetailPage} from "./Modules/Detail/Pages/DetailPage";
 
 function App() {
   return (

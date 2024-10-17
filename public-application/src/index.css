@@ -14,15 +14,15 @@ body {
   width: 500px; /* Initial width */
   height: 100%;
   background-color: white;
-  animation: shrinkWidth 2s linear 0.5s forwards; /* 1s duration, 3s delay, forwards to keep final state */
+  animation: shrinkWidth 1s linear 0.5s forwards; /* 1s duration, 3s delay, forwards to keep final state */
 }
 #that {
   right: 100%;
-  animation: moveRight 1.5s linear 0.5s forwards;
+  animation: moveRight 0.8s linear 0.5s forwards;
 }
 #bod {
   clip-path: ellipse(0px 0px at 0% 0%);
-  animation: circle 3s linear 2s forwards;
+  animation: circle 1.5s linear 0.5s forwards;
 }
 @keyframes circle {
   0% {

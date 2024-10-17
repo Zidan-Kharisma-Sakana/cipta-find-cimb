@@ -1,15 +1,19 @@
 import Info from './Info';
+import { DataContext } from '../Pages/DetailPage';
+import { useContext } from 'react';
 
 const InfoBox = () => {
+  const data = useContext(DataContext)
+
     return (
         <>
             <div className="grid grid-cols-2 mt-6 gap-y-6">
-            <Info title="Provinsi" value="Jawa Timur"/>
-            <Info title="Kota/Kabupatan" value="Surabaya"/>
+            <Info title="Provinsi" value={data.province}/>
+            <Info title="Kota/Kabupatan" value={data.city}/>
             <div className="col-span-2">
-              <Info title="Alamat"value="Jalan Kemenangan no 31, Kel. Huhuhaha Kec. heheh"/>
+              <Info title="Alamat"value={data.address}/>
             </div>
-            <Info title="Jam Operasional" value="08.00-17.00"/>
+            <Info title="Jam Operasional" value={`${data.open_hour}-${data.close_hour}`}/>
           </div>
         </>
     )

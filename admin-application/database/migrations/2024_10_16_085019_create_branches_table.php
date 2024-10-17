@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('branchs', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->enum('type', ['atm', 'cdm', 'tst', 'kc', 'kcs', 'kcp_sb', 'kcp_dl', 'kcps']);
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('close_hour');
             $table->integer('queue')->default(0);
             $table->float('rate')->default(0);
-            $table->boolean('is_delete')->default(false);
+            $table->boolean('is_deleted')->default(false);
             $table->string('image_path');
             $table->timestamps();
         });

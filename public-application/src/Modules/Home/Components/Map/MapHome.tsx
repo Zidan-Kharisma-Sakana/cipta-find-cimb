@@ -6,6 +6,7 @@ import { useGeolocation } from "../../../../Utils/useGeolocation";
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import { MarkerLocation, MarkerUser } from "./MapMarker";
+import { useFilter } from "../../../../Utils/useFilter";
 
 const MapHome: React.FC = () => {
   const { latitude, longitude, loading, error } = useGeolocation();
@@ -22,15 +23,16 @@ const MapHome: React.FC = () => {
       setMarkerSize("sm");
     }
   });
+  const { data } = useFilter();
+
   if (!latitude || !longitude || loading || error) {
     return <div />;
   }
-  const locations: any[] = [];
   return (
     <>
       <MarkerUser />
-      {locations.map((location, idx) => (
-        <MarkerLocation key={"location-" + idx} position={[latitude, longitude]} size={markerSize} />
+      {data.map((location, idx) => (
+        <MarkerLocation key={"location-" + idx} location={location} size={markerSize} />
       ))}
     </>
   );

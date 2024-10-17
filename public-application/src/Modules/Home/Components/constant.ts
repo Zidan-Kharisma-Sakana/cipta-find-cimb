@@ -34,5 +34,15 @@ export const CATEGORY_OPTIONS = [
   {
     label: "Cabang Pembantu Syariah",
     value: "kcps",
-  }
+  },
 ];
+export const CATEGORY_DICTIONARY = {
+  kc: "Cabang Utama",
+  kcs: "Cabang Utama Syariah",
+  kcp_sb: "Cabang Pembantu",
+  kcp_dl: "Digital Lounge",
+  kcps: "Cabang Pembantu Syariah",
+  atm: "ATM Tarik Tunai",
+  cdm: "ATM Setor Tunai",
+  tst: "ATM Tarik & Setor Tunai",
+};

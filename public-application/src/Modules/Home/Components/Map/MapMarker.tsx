@@ -2,8 +2,12 @@ import { Marker, Popup, useMap } from "react-leaflet";
 import { useGeolocation } from "../../../../Utils/useGeolocation";
 import { useEffect } from "react";
 import CIMB from "../../../../assets/cimb_2.png";
+import OCTO from "../../../../assets/octo2.png";
+
 import RedCircle from "../../../../assets/red_circle.png";
 import L from "leaflet";
+import { Branch } from "../../../../Utils/type";
+import { CATEGORY_DICTIONARY } from "../constant";
 
 export const MarkerUser = () => {
   const { latitude, longitude, loading, error } = useGeolocation();
@@ -19,7 +23,17 @@ export const MarkerUser = () => {
   if (!latitude || !longitude || loading || error) {
     return <div />;
   }
-  return <Marker position={[latitude, longitude]} />;
+  return (
+    <Marker
+      icon={L.icon({
+        iconUrl: OCTO,
+        iconSize: [80, 80],
+        iconAnchor: [40, 40],
+        popupAnchor: [0, -40],
+      })}
+      position={[latitude, longitude]}
+    />
+  );
 };
 type MarkerObjectSize = {
   [k1: string]: {
@@ -57,10 +71,7 @@ const MARKER_SIZE: MarkerObjectSize = {
   },
 };
 
-export const MarkerLocation: React.FC<{ position: L.LatLngExpression; size: keyof typeof MARKER_SIZE }> = ({
-  position,
-  size,
-}) => {
+export const MarkerLocation: React.FC<{ size: keyof typeof MARKER_SIZE; location: Branch }> = ({ location, size }) => {
   const { iconAnchor, iconSize, popupAnchor, shadowAnchor, shadowSize } = MARKER_SIZE[size];
   return (
     <Marker
@@ -73,20 +84,17 @@ export const MarkerLocation: React.FC<{ position: L.LatLngExpression; size: keyo
         shadowAnchor,
         shadowSize,
       })}
-      position={position}
+      position={[Number(location.latitude), Number(location.longitude)]}
     >
       <Popup>
-        <PopUpData />
+        <div className="max-w-48">
+          <h6 className="text-xs font-medium">
+            {CATEGORY_DICTIONARY[location.type as keyof typeof CATEGORY_DICTIONARY]}
+          </h6>
+          <h5 className="font-bold mt-1">{location.name}</h5>
+          <h6 className="line-clamp-3 mt-2">{location.address}</h6>
+        </div>{" "}
       </Popup>
     </Marker>
-  );
-};
-const PopUpData = () => {
-  return (
-    <div className="max-w-48">
-      <h6 className="text-sm font-medium">Kantor Cabang</h6>
-      <h5 className="font-bold mt-1">Nama</h5>
-      <h6 className="line-clamp-3 mt-2">Jl kucing 123 456 789 10 11 12 13 14 blabla blabla blabla</h6>
-    </div>
   );
 };

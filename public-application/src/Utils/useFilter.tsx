@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useState, ReactNode, useCallback, useEffect } from "react";
+import { Branch } from "./type";
 
 interface FilterContextProps {
   type: string;
@@ -7,6 +8,7 @@ interface FilterContextProps {
   province: string;
   city: string;
   category: string;
+  data: Branch[];
   setFilter: (filter: string, value: any) => void;
 }
 
@@ -18,6 +20,7 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
   const [category, setCategory] = useState("");
+  const [data, setData] = useState<Branch[]>([]);
 
   const setFilter = useCallback(
     (filter: string, value: string) => {
@@ -51,11 +54,28 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   );
 
   useEffect(() => {
-    console.log(searchTerm, type, province, city, category);
+    async function getData() {
+      const response = await fetch(
+        `http://localhost:8000/api/${type}/filter?${new URLSearchParams({
+          ...(searchTerm ? { name: searchTerm } : {}),
+          ...(city ? { city } : {}),
+          ...(province ? { province } : {}),
+          ...(category ? { type: category } : {}),
+        })}`
+      );
+      const result = await response.json();
+      if (response.status === 200) {
+        setData(result.data);
+      } else {
+        console.error(result);
+        setData([])
+      }
+    }
+    getData();
   }, [searchTerm, type, province, city, category]);
 
   return (
-    <FilterContext.Provider value={{ type, searchTerm, province, city, category, setFilter }}>
+    <FilterContext.Provider value={{ data, type, searchTerm, province, city, category, setFilter }}>
       {children}
     </FilterContext.Provider>
   );

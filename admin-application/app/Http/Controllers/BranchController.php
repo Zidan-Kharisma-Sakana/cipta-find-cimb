@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class BranchController extends Controller
@@ -30,40 +32,83 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        dd('store');
+        $validateBranch = $request->validate([
+            "name"=>'required',
+            "type"=>'required',
+            "address"=>'required',
+            "city"=>'required',
+            "province"=>'required',
+            "cp"=>'required',
+            "latitude"=>'required',
+            "longitude"=>'required',
+            "open_hour"=>'required',
+            "close_hour"=>'required',
+            "image_path"=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+
+        if($request->file('image_path')){
+            $validateBranch['image_path'] = $request->file('image_path')->store('branch-images');
+        }
+
+        Branch::create($validateBranch);
+        return redirect('/branch')->with('storeBranchSuccess', 'Data berhasil disimpan!');
     }
+    
 
     /**
      * Display the specified resource.
      */
-    public function show(String $id)
+    public function show(Branch $branch)
     {
-        $branch = Branch::find($id);
-        return view('branch.show', ['title' => 'Branch Detail', 'branch' => $branch]);
+        return view('branch.show', ['title' => 'Detail Kantor Cabang', 'branch' => $branch]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(String $boatClassId)
+    public function edit(Branch $branch)
     {
-        return view ('branch.edit', ['title' => 'Kantor Cabang']);
+        return view('branch.edit', ['title' => 'Edit Kantor Cabang', 'branch' => $branch]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, String $boatClassId)
+    public function update(Request $request, Branch $branch)
     {
-        dd('update');
+        $validateBranch = $request->validate([
+            "name"=>'required',
+            "type"=>'required',
+            "address"=>'required',
+            "city"=>'required',
+            "province"=>'required',
+            "cp"=>'required',
+            "latitude"=>'required',
+            "longitude"=>'required',
+            "open_hour"=>'required',
+            "close_hour"=>'required',
+        ]);
+
+
+        if($request->file('image_path')){
+            if($request->old_image){
+                Storage::delete($request->old_image);
+            }
+            $validateBranch['image_path'] = $request->file('image_path')->store('branch-images');
+        }
+
+        Branch::where('id', $branch->id)->update($validateBranch); 
+        return redirect('/branch')->with('updateBranchSuccess', 'Data berhasil diubah!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(String $boatClassId)
+    public function destroy(Branch $branch)
     {
-        dd('delete');
+        Branch::where('id', $branch->id)->update(['is_deleted' => $branch->is_deleted == true ? false : true]);
+        return redirect('/branch')->with('destroyBranchSuccess', 'Brnach status diubah!'); 
     }
 
     public function branchData(Request $request)
@@ -74,8 +119,8 @@ class BranchController extends Controller
         ->setRowId('{{$id}}')
         ->editColumn('opHour', function ($row) {
             return $row->open_hour . ' - ' . $row->close_hour;})
-        ->editColumn('isDeleted', function ($row) {
-            return $row->isDeleted ? 'YA' : 'TIDAK' ;})
+        ->editColumn('is_deleted', function ($row) {
+            return $row->is_deleted ? 'YA' : 'TIDAK' ;})
         ->make(true);
     }
 }

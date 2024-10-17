@@ -20,6 +20,13 @@
             @if (session()->has('storeBranchSuccess'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('storeBranchSuccess') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+                </div>
+            @endif
+
+            @if (session()->has('storeBranchFailed'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('storeBranchFailed') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
@@ -123,8 +130,8 @@
                     //     name: 'Branch.rate',
                     // },
                     {
-                        data: 'isDeleted',
-                        name: 'Branch.isDeleted',
+                        data: 'is_deleted',
+                        name: 'Branch.is_deleted',
                     },
                     {
                         targets: -1,

@@ -48,13 +48,13 @@
 
             <!-- Nav Item - Dashboard -->
 
-            <li class="nav-item {{ Request::is('admin/*') ? 'active' : '' }}">
+            <li class="nav-item {{ Request::is('/*') ? 'active' : '' }}">
                 <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <li class="nav-item {{ Request::is('admin/branch*') ? 'active' : '' }}">
+            <li class="nav-item {{ Request::is('branch*') ? 'active' : '' }}">
                 <a class="nav-link" href="/branch">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Kantor Cabang</span></a>
@@ -194,13 +194,7 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('sbadmin/js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{ asset('sbadmin/vendor/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('sbadmin/js/demo/chart-area-demo.js') }}"""></script>
-    <script src="{{ asset('sbadmin/js/demo/chart-pie-demo.js') }}"></script>
-
+    @yield('script')
 </body>
 
 </html>

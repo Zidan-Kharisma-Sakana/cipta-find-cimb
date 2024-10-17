@@ -130,8 +130,8 @@
                     //     name: 'Branch.rate',
                     // },
                     {
-                        data: 'isDeleted',
-                        name: 'Branch.isDeleted',
+                        data: 'is_deleted',
+                        name: 'Branch.is_deleted',
                     },
                     {
                         targets: -1,

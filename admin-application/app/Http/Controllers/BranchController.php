@@ -105,9 +105,10 @@ class BranchController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(String $boatClassId)
+    public function destroy(Branch $branch)
     {
-        dd('delete');
+        Branch::where('id', $branch->id)->update(['is_deleted' => $branch->is_deleted == true ? false : true]);
+        return redirect('/branch')->with('destroyBranchSuccess', 'Brnach status diubah!'); 
     }
 
     public function branchData(Request $request)
@@ -118,8 +119,8 @@ class BranchController extends Controller
         ->setRowId('{{$id}}')
         ->editColumn('opHour', function ($row) {
             return $row->open_hour . ' - ' . $row->close_hour;})
-        ->editColumn('isDeleted', function ($row) {
-            return $row->isDeleted ? 'YA' : 'TIDAK' ;})
+        ->editColumn('is_deleted', function ($row) {
+            return $row->is_deleted ? 'YA' : 'TIDAK' ;})
         ->make(true);
     }
 }

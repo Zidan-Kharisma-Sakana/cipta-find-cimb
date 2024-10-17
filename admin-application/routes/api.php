@@ -28,3 +28,6 @@ Route::get('/test', function () {
 });
 
 Route::get('/get-user', [UserController::class, 'getAllUser']);
+
+// show all branch location
+Route::get('/branchs', [BranchController::class, 'showAll']);

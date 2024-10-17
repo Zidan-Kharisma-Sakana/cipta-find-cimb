@@ -41,7 +41,6 @@ class BranchSeeder extends Seeder
             ['name' => 'CIMB Niaga Pekanbaru', 'type' => 'kc', 'address' => 'Jl. Sudirman No. 88, Pekanbaru', 'city' => 'Pekanbaru', 'province' => 'Riau', 'cp' => '0761-8765432', 'latitude' => '0.5339', 'longitude' => '101.4489', 'open_hour' => '08:00', 'close_hour' => '15:00', 'queue' => 3, 'rate' => 4.6, 'is_delete' => false, 'image_path' => 'images/branch25.jpg'],
         ];
 
-        // Insert branches into the database
         DB::table('branchs')->insert($branchs);
     }
 }

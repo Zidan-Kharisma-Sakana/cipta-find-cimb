@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\BranchController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +22,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/branch', function () {
-    return view('branch/index');
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('dashboard/index');
+    })->name('dashboard.index')->middleware('is_superadmin');
+
+    Route::get('/branch', function () {
+        return view('branch/index');
+    })->name('branch.index');
+
 });
+
+// Login & Logout
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

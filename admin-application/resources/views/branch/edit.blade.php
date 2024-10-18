@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('head')
     <title>{{ $title }}</title>
+    <link href="{{ asset('js/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/leaflet/leaflet.css') }}" rel="stylesheet">
+    <!-- Scripts -->
+    <script src="{{ asset('js/leaflet/leaflet.js') }}"></script>
+
+    <script src="{{ asset('js/pinpointedit.js') }}"></script>
 @endsection
 
 @section('content')
@@ -21,7 +27,8 @@
                             <option value="cdm" {{ old('type', $branch->type) === 'cdm' ? 'selected' : '' }}>CDM</option>
                             <option value="tst" {{ old('type', $branch->type) === 'tst' ? 'selected' : '' }}>TST</option>
                             <option value="kc" {{ old('type', $branch->type) === 'kc' ? 'selected' : '' }}>KC</option>
-                            <option value="kcs" {{ old('type', $branch->type) === 'kcs' ? 'selected' : '' }}>KCS</option>
+                            <option value="kcs" {{ old('type', $branch->type) === 'kcs' ? 'selected' : '' }}>KCS
+                            </option>
                             <option value="kcs_sb" {{ old('type', $branch->type) === 'kcs_sb' ? 'selected' : '' }}>KCS SB
                             </option>
                             <option value="kcp_dl" {{ old('type', $branch->type) === 'kcp_dl' ? 'selected' : '' }}>KCP DL
@@ -101,25 +108,23 @@
                         @enderror
                     </div>
 
+
                     <div class="mb-3">
-                        <label for="latitude" class="form-label">Latitude</label>
-                        <input type="text" class="form-control  @error('latitude') is-invalid @enderror" name="latitude"
-                            id="latitude" aria-describedby="latitudeHelp" required
-                            value="{{ old('latitude', $branch->latitude) }}">
+                        <label for="image_path" class="form-label">Lokasi</label>
+                        <div id="map"></div>
                         @error('latitude')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="longitude" class="form-label">Longitude</label>
-                        <input type="text" class="form-control  @error('longitude') is-invalid @enderror"
-                            name="longitude" id="longitude" aria-describedby="longitudeHelp" required
-                            value="{{ old('longitude', $branch->longitude) }}">
                         @error('longitude')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <input hidden type="text" class="form-control  @error('latitude') is-invalid @enderror"
+                        name="latitude" id="latitude" aria-describedby="latitudeHelp" required
+                        value="{{ old('latitude', $branch->latitude) }}">
+                    <input hidden type="text" class="form-control  @error('longitude') is-invalid @enderror"
+                        name="longitude" id="longitude" aria-describedby="longitudeHelp" required
+                        value="{{ old('longitude', $branch->longitude) }}">
 
                     <div class="mb-3">
                         <label for="image_path" class="form-label">Gambar</label>

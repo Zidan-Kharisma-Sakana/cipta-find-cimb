@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('head')
     <title>{{ $title }}</title>
+    <link href="{{ asset('js/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/leaflet/leaflet.css') }}" rel="stylesheet">
+    <!-- Scripts -->
+    <script src="{{ asset('js/leaflet/leaflet.js') }}"></script>
+
+    <script src="{{ asset('js/pinpoint.js') }}"></script>
 
     <style>
         .round-btn {
@@ -34,7 +40,7 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
         </div>
-        
+
         <div class="card shadow mb-4 w-75 mx-auto">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-danger">Tambah Kantor Cabang</h6>
@@ -127,23 +133,19 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="latitude" class="form-label">Latitude</label>
-                        <input type="text" class="form-control  @error('latitude') is-invalid @enderror" name="latitude"
-                            id="latitude" aria-describedby="latitudeHelp" required value="{{ old('latitude') }}">
+                        <label for="image_path" class="form-label">Lokasi</label>
+                        <div id="map"></div>
                         @error('latitude')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="longitude" class="form-label">Longitude</label>
-                        <input type="text" class="form-control  @error('longitude') is-invalid @enderror"
-                            name="longitude" id="longitude" aria-describedby="longitudeHelp" required
-                            value="{{ old('longitude') }}">
                         @error('longitude')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <input hidden type="text" class="form-control  @error('latitude') is-invalid @enderror" name="latitude"
+                        id="latitude" aria-describedby="latitudeHelp" required value="{{ old('latitude') }}">
+                    <input hidden type="text" class="form-control  @error('longitude') is-invalid @enderror" name="longitude"
+                        id="longitude" aria-describedby="longitudeHelp" required value="{{ old('longitude') }}">
 
                     <div class="mb-3">
                         <label for="image_path" class="form-label">Gambar</label>

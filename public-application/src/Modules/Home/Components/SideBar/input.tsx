@@ -46,7 +46,7 @@ export const TypeQueryInput = () => {
 export const SearchQueryInput = () => {
   const [term, setTerm] = useState("");
   const { setFilter } = useFilter();
-  const debounced = useDebounce(term, 2000);
+  const debounced = useDebounce(term, 1000);
   useEffect(() => {
     setFilter("searchTerm", debounced);
   }, [debounced, setFilter]);

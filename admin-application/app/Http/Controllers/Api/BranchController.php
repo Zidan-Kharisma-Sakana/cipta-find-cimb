@@ -102,6 +102,10 @@ class BranchController extends Controller
                 ->whereIn('type', ['atm', 'cdm', 'tst']);
 
             // Ubah input user menjadi lowercase untuk pengecekan case-insensitive
+            if ($request->has('name')) {
+                $name = strtolower($request->name);
+                $branchs->whereRaw('LOWER(name) LIKE ?', ["%{$name}%"]);
+            }
             if ($request->has('city')) {
                 $city = strtolower($request->city);
                 $branchs->whereRaw('LOWER(city) LIKE ?', ["%{$city}%"]);

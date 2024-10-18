@@ -19,21 +19,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Arahkan '/' ke login atau dashboard tergantung status autentikasi
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('branch.index'); // Ubah sesuai halaman dashboard kamu
+    } else {
+        return redirect()->route('login');
+    }
+});
+
+Route::get('/home', function () {
+    return redirect()->route('branch.index'); // Ubah sesuai halaman dashboard kamu
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
 });
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/', function () {
-    //     return view('dashboard/index');
-    // })->name('dashboard.index');
-
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('/branch', AdminBranchController::class);
     Route::get('/branch-data', [AdminBranchController::class, 'branchData'])->name('branch.data');
-
 });
-
-// Login & Logout
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

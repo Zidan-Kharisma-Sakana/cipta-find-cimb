@@ -110,9 +110,9 @@
 
                     <div class="mb-3">
                         <p class="form-label">Layanan</p>
-                        <div class="row">
+                        <div class="row ">
                             @foreach ($allService as $index => $service)
-                                <div class="form-check">
+                                <div class="form-check col-4">
                                     <label class="form-check-label"><input class="form-check-input" type="checkbox"
                                             value="{{ $service }}" id="service_desc" name="service_desc[]"
                                             {{ strpos($branch->service_desc, $service) !== false ? 'checked' : '' }}>

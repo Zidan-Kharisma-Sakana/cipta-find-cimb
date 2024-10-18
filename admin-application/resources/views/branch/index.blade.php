@@ -85,7 +85,7 @@
                 searching: false,
                 processing: true,
                 serverSide: true,
-                scrollX: true,
+                // scrollX: true,
                 ajax: {
                     url: "{!! route('branch.data') !!}",
                     type: 'GET',

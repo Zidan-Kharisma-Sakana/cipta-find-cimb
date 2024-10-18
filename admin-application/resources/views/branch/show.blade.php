@@ -20,6 +20,7 @@
                 <p>Provinsi: {{ $branch->province }}</p>
                 <p>Nomor Kontak: {{ $branch->cp }}</p>
                 <p>Jam Operasional: {{ $branch->open_hour . '-' . $branch->close_hour }}</p>
+                <p>Layanan: {{ $branch->service_desc }}</p>
                 <p>Antrian: {{ $branch->queue }}</p>
                 <p>Penilaian: {{ $branch->rate }}</p>
                 <p>Nonaktif: {{ $branch->is_deleted ? 'YA' : 'TIDAK' }}</p>

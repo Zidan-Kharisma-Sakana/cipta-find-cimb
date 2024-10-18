@@ -28,7 +28,7 @@ class AuthController extends Controller
         // Login process
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             if (Auth::user()->is_superadmin) {
-                return redirect()->route('dashboard.index');
+                return redirect()->route('branch.index');
             }
         }
 

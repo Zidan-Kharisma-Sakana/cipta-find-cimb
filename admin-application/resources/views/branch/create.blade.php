@@ -69,7 +69,7 @@
 
                     <div class="mb-3">
                         <label for="cp" class="form-label">Nomor Kontak</label>
-                        <input type="text" class="form-control  @error('cp') is-invalid @enderror" name="cp"
+                        <input type="number" class="form-control  @error('cp') is-invalid @enderror" name="cp"
                             id="cp" aria-describedby="cpHelp" required value="{{ old('cp') }}">
                         @error('cp')
                             <div class="invalid-feedback">{{ $message }}</div>

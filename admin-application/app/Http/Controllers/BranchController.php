@@ -43,9 +43,11 @@ class BranchController extends Controller
             "longitude"=>'required',
             "open_hour"=>'required',
             "close_hour"=>'required',
+            "service_desc"=>'required',
             "image_path"=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $validateBranch['service_desc'] = implode(', ', $validateBranch['service_desc']);
 
         if($request->file('image_path')){
             $validateBranch['image_path'] = $request->file('image_path')->store('branch-images');
@@ -69,7 +71,9 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        return view('branch.edit', ['title' => 'Edit Kantor Cabang', 'branch' => $branch]);
+        $serviceList = explode(', ', $branch->service_desc);
+        $allService = ['Tabungan', 'Kartu Kredit', 'KPR', 'KTA', 'Reksadana', 'BancAssurance', 'Wakaf', 'Treasury', 'Kartu Debit'];
+        return view('branch.edit', ['title' => 'Edit Kantor Cabang', 'branch' => $branch, 'serviceList' => $serviceList, 'allService' => $allService]);
     }
 
     /**
@@ -88,7 +92,10 @@ class BranchController extends Controller
             "longitude"=>'required',
             "open_hour"=>'required',
             "close_hour"=>'required',
+            "service_desc"=>'required',
         ]);
+
+        $validateBranch['service_desc'] = implode(', ', $validateBranch['service_desc']);
 
 
         if($request->file('image_path')){

@@ -7,10 +7,40 @@
     <script src="{{ asset('js/leaflet/leaflet.js') }}"></script>
 
     <script src="{{ asset('js/pinpoint.js') }}"></script>
+
+    <style>
+        .round-btn {
+            background: linear-gradient(to bottom right, #f0625f, #ea5248);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .round-btn:hover {
+            background: linear-gradient(to bottom right, #ea5248, #e9443e);
+        }
+
+        .round-btn i {
+            font-size: 18px;
+        }
+    </style>
 @endsection
 
 @section('content')
     <div class="container-fluid">
+        <div class="mt-3 text-center">
+            <button type="button" class="round-btn" onclick="window.history.back();">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
+
         <div class="card shadow mb-4 w-75 mx-auto">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-danger">Tambah Kantor Cabang</h6>

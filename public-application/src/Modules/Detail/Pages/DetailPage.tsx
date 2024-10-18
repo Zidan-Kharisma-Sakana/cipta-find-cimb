@@ -1,18 +1,46 @@
-import CIMB from "../../Layout/CIMB";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
+import { useEffect, createContext } from "react";
+import HomeLayout from "../../Layout/HomeLayout";
+import MapDetailContainer from "../Components/Map/index";
+import SideBarDetail from "../Components/SidebarDetail";
+import { getBranch } from "../api";
+import { useParams } from "react-router-dom";
 
-export default function DetailPage() {
+export const DataContext = createContext(null);
+
+function Detail() {
   return (
-    <main>
-      <div className="w-full flex justify-between px-6 py-4 fixed border z-10 bg-gradient-to-r from-cimbSecondary200 to-cimbSecondary300">
-        <div>
-        </div>
-        <CIMB />
-      </div>
-      <section className="w-full">
-        <div>
-          Home
-        </div>
-      </section>
-    </main>
+    <section className="w-full flex flex-col-reverse md:flex-row h-screen">
+      <SideBarDetail />
+      <MapDetailContainer />
+    </section>
+  );
+}
+export function DetailPage() {
+  const { kacab_id } = useParams();
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!kacab_id) return;
+      const branch = await getBranch(kacab_id);
+      setLoading(false);
+      setData(branch);
+    }
+    fetchData();
+  }, [kacab_id]);
+
+  return (
+    <HomeLayout>
+      {loading ? (
+        <>Loading</>
+      ) : (
+        <DataContext.Provider value={data as any}>
+          <Detail />
+        </DataContext.Provider>
+      )}
+    </HomeLayout>
   );
 }

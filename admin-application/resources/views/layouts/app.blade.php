@@ -31,7 +31,7 @@
         <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/branch">
                 <div class="sidebar-brand-icon">
                     <img src="{{ asset('cimb.png') }}" alt="CIMB Niaga" style="height: 64px; width: auto;">
                 </div>

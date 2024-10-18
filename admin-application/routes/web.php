@@ -23,15 +23,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard/index');
-    })->name('dashboard.index');
+Route::middleware('auth')->group(function () {
+    // Route::get('/', function () {
+    //     return view('dashboard/index');
+    // })->name('dashboard.index');
 
     Route::resource('/branch', AdminBranchController::class);
     Route::get('/branch-data', [AdminBranchController::class, 'branchData'])->name('branch.data');
 
-// });
+});
 
 // Login & Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->float('rate')->default(0);
             $table->boolean('is_deleted')->default(false);
             $table->string('image_path');
+            $table->string('service_desc');
             $table->timestamps();
         });
     }

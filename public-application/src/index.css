@@ -1,10 +1,72 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
   margin: 0;
-  border: none;
+}
+
+body {
+  overscroll-behavior: none;
+  /* overflow-y: hidden; */
+}
+#this {
+  width: 500px; /* Initial width */
+  height: 100%;
+  background-color: white;
+  animation: shrinkWidth 1s linear 0.5s forwards; /* 1s duration, 3s delay, forwards to keep final state */
+}
+#that {
+  right: 100%;
+  animation: moveRight 0.8s linear 0.5s forwards;
+}
+#bod {
+  clip-path: ellipse(0px 0px at 0% 0%);
+  animation: circle 1.5s linear 0.5s forwards;
+}
+.leaflet-popup-content{
+  width: 400px !important;
+}
+@keyframes circle {
+  0% {
+    clip-path: ellipse(0px 0px at 20% 20%);
+  }
+  100% {
+    clip-path: ellipse(200% 200% at 20% 20%);
+  }
+}
+@keyframes moveRight {
+  from {
+    right: 100%;
+  }
+  to {
+    right: 0%;
+  }
+}
+@keyframes shrinkWidth {
+  0% {
+    width: 500px;
+  }
+  100% {
+    width: 0px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

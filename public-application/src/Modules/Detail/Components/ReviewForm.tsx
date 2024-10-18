@@ -24,7 +24,7 @@ const ReviewForm = () => {
         e.preventDefault(); // Prevent page reload
         console.log(kacab_id)
         try {
-            const response = await fetch(`http://10.10.90.13:8000/api/office/${kacab_id}/review`, {
+            const response = await fetch(`http://localhost:8000/api/office/${kacab_id}/review`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',

@@ -10,6 +10,11 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+        if (auth()->check()) {
+            // Jika sudah login, redirect ke halaman dashboard atau branch
+            return redirect()->route('branch.index');
+        }
+
         return view('auth.login');
     }
 

@@ -11,7 +11,7 @@
                     {{ $branch->name }}</h6>
             </div>
             <div class="card-body">
-                <p>Gambar: {{ $branch->image_path }} ??? ntar dlu y</p>
+                <p>Gambar: {{ $branch->image_path }}</p>
                 <p>ID: {{ $branch->id }}</p>
                 <p>Nama: {{ $branch->name }}</p>
                 <p>Tipe: {{ $branch->type }}</p>

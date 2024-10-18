@@ -41,6 +41,7 @@ const ReviewForm = () => {
         } catch (error) {
 
         }
+        window.location.reload()
     };
 
     return (

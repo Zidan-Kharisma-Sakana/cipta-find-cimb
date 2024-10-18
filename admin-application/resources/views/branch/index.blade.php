@@ -85,54 +85,54 @@
                 searching: false,
                 processing: true,
                 serverSide: true,
-                scrollX: true,
+                // scrollX: true,
                 ajax: {
                     url: "{!! route('branch.data') !!}",
                     type: 'GET',
                 },
                 columns: [{
                         data: 'id',
-                        name: 'Branch.id',
+                        name: 'id',
                     },
                     {
                         data: 'name',
-                        name: 'Branch.name',
+                        name: 'name',
                     },
                     {
                         data: 'type',
-                        name: 'Branch.type',
+                        name: 'type',
                     },
                     {
                         data: 'address',
-                        name: 'Branch.address',
+                        name: 'address',
                     },
                     // {
                     //     data: 'city',
-                    //     name: 'Branch.city',
+                    //     name: 'city',
                     // },
                     // {
                     //     data: 'province',
-                    //     name: 'Branch.province',
+                    //     name: 'province',
                     // },
                     // {
                     //     data: 'cp',
-                    //     name: 'Branch.cp',
+                    //     name: 'cp',
                     // },
                     {
                         data: 'opHour',
-                        name: 'Branch.opHour',
+                        name: 'opHour',
                     },
                     {
                         data: 'queue',
-                        name: 'Branch.queue',
+                        name: 'queue',
                     },
                     // {
                     //     data: 'rate',
-                    //     name: 'Branch.rate',
+                    //     name: 'rate',
                     // },
                     {
                         data: 'is_deleted',
-                        name: 'Branch.is_deleted',
+                        name: 'is_deleted',
                     },
                     {
                         targets: -1,

@@ -108,6 +108,20 @@
                         @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <p class="form-label">Layanan</p>
+                        <div class="row ">
+                            @foreach ($allService as $index => $service)
+                                <div class="form-check col-4">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="{{ $service }}" id="service_desc" name="service_desc[]"
+                                            {{ strpos($branch->service_desc, $service) !== false ? 'checked' : '' }}>
+                                        {{ $service }}</label>
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
 
                     <div class="mb-3">
                         <label for="image_path" class="form-label">Lokasi</label>

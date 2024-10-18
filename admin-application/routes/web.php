@@ -42,3 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/branch', AdminBranchController::class);
     Route::get('/branch-data', [AdminBranchController::class, 'branchData'])->name('branch.data');
 });
+
+
+Route::post('/branch/{id}/queue/increase', [BranchController::class, 'incrementQueue'])->name('queue.increase');
+Route::post('/branch/{id}/queue/decrease', [BranchController::class, 'decrementQueue'])->name('queue.decrease');
+

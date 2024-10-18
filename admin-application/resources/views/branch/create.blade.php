@@ -133,6 +133,62 @@
                     </div>
 
                     <div class="mb-3">
+                        <p class="form-label">Layanan</p>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="Tabungan" id="service_desc" name="service_desc[]">Tabungan</label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="Kartu Kredit" id="service_desc" name="service_desc[]">Kartu
+                                        Kredit</label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="KPR" id="service_desc" name="service_desc[]">KPR</label>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="KTA" id="service_desc" name="service_desc[]">KTA</label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="Reksadana" id="service_desc" name="service_desc[]">Reksadana</label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="BancAssurancec" id="service_desc"
+                                            name="service_desc[]">BancAssurancec</label>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="Wakaf" id="service_desc" name="service_desc[]">Wakaf</label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="Treasury" id="service_desc" name="service_desc[]">Treasury</label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                                            value="Kartu Kredit" id="service_desc" name="service_desc[]">Kartu
+                                        Kredit</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="mb-3">
                         <label for="image_path" class="form-label">Lokasi</label>
                         <div id="map"></div>
                         @error('latitude')
@@ -142,10 +198,12 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <input hidden type="text" class="form-control  @error('latitude') is-invalid @enderror" name="latitude"
-                        id="latitude" aria-describedby="latitudeHelp" required value="{{ old('latitude') }}">
-                    <input hidden type="text" class="form-control  @error('longitude') is-invalid @enderror" name="longitude"
-                        id="longitude" aria-describedby="longitudeHelp" required value="{{ old('longitude') }}">
+                    <input hidden type="text" class="form-control  @error('latitude') is-invalid @enderror"
+                        name="latitude" id="latitude" aria-describedby="latitudeHelp" required
+                        value="{{ old('latitude') }}">
+                    <input hidden type="text" class="form-control  @error('longitude') is-invalid @enderror"
+                        name="longitude" id="longitude" aria-describedby="longitudeHelp" required
+                        value="{{ old('longitude') }}">
 
                     <div class="mb-3">
                         <label for="image_path" class="form-label">Gambar</label>
@@ -155,6 +213,8 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+
 
 
                     <button type="submit" class="btn btn-danger">Tambah</button>
